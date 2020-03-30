@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<style>
+    *{
+        padding:0;
+        margin:0;
+        box-sizing: border-box;
+    }
+#container{
+   
+}
+#podloga{
+    border:red 1px solid;
+    position: absolute;
+    width:100%;
+    height:100px;
+    bottom:0;
+    background-color: grey;
+    
+}
+#tlo{
+    height:100%;
+    width:100%;
+    background-color:aqua;
+    position:absolute;
+
+    
+}
+#board{
+    position:absolute;
+    height:400px;
+    width:600px;
+    left:50vw;
+    top:50vh;
+    transform:translate(-50%,-50%);
+
+}
+#sciana{
+    
+    height:300px;
+    width:50px;
+    background-color:red;
+    position:absolute;
+    left:80%;
+    top:0;
+}
+#postac{
+    height:150px;
+    width:50px;
+    position:absolute;
+    left:50%;
+    bottom:50px;
+    
+}
+</style>
+</head>
+
+<body>
+<div id="container">
+    <div id="board">
+    <div id="tlo">tlo</div>
+    <div id="podloga">podloga</div>
+    <div id="postac" ><img id="player" src="stojacy.PNG" alt=""></div>
+    <div id="sciana">sciana</div>
+    </div>
+</div>
+</body>
+<script src="app.js"></script>
+
+</html>
