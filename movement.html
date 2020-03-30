@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            box-sizing: border-box;
+        }
+        #player{
+            width:10px;
+            height:10px;
+            background:green;
+            position:relative;
+        }
+        #wall{
+            left:-150px;
+            width:50px;
+            height:300px;
+            background:red;
+            position:relative;            
+        }
+        #container{
+            display:flex;
+            justify-content:center;
+        }
+        #board{
+            overflow:hidden;
+            position:relative;
+            border:1px solid grey;
+            width:600px;
+            height:400px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="board">
+            <div id="wall"></div>
+            <div id="player"></div>
+
+        </div>
+    </div>
+
+
+        <script>
+
+            const player = document.querySelector('#player');
+            const wall = document.querySelector('#wall');
+
+            document.addEventListener('keydown',onKeyDown);
+
+            let step = 5;
+
+            let moveInterval = null;
+
+            function move(){
+                if(wall.offsetLeft < 600){
+                    wall.style.left = wall.offsetLeft + step + 'px';
+                } else {
+                    wall.style.left = -200 + 'px';
+                }
+                
+            }
+
+            function onKeyDown(event){
+                console.log(event.which, event.code);
+                switch(event.code){
+                    case 'Space':
+                        if(moveInterval === null){
+                            start();
+                        } else {
+                            stop();
+                        }              
+                    break;
+                }
+            }
+
+            function start(){
+              moveInterval = setInterval(move,10);
+            }
+
+            function stop(){
+              clearInterval(moveInterval);
+              moveInterval = null;
+            }
+        </script>
+</body>
+</html>
