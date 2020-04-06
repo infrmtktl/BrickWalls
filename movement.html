@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            box-sizing: border-box;
+        }
+        #player{
+            width:10px;
+            height:100px;
+            background:green;
+            position:relative;
+            bottom:100px;
+        }
+        #wall{
+            left:700px;
+            width:50px;
+            height:300px;
+            background:red;
+            position:relative;            
+        }
+        #container{
+            display:flex;
+            justify-content:center;
+        }
+        #board{
+            overflow:hidden;
+            position:relative;
+            border:1px solid grey;
+            width:600px;
+            height:400px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="board">
+            <div id="wall"></div>
+            <div id="player"></div>
+
+        </div>
+    </div>
+
+
+        <script>
+
+            const player = document.querySelector('#player');
+            const wall = document.querySelector('#wall');
+
+            document.addEventListener('keydown',onKeyDown);
+
+            let step = 5;
+
+            let moveInterval = null;
+
+            let isPunch = false;
+
+            let isPlaying = false;
+
+            function mainLoop(){
+                if(wall.offsetLeft > -150){
+                    wall.style.left = wall.offsetLeft - step + 'px';
+                } else {
+                    wall.style.left = 600 + 'px';
+                }
+                if(player.offsetLeft < 250){
+                    player.style.left = player.offsetLeft + step -2 + 'px';
+                }
+                //if(){
+                    //sprawdzenie czy nie ma uderzenia
+            
+                if(player.offsetLeft >= wall.offsetLeft - 10){
+
+                    stop()
+                    console.log(player.offsetLeft , wall.offsetLeft)
+                }
+             //}   else{
+                 //rozwalanie ściany
+                 //reset zmiennej punch
+             }
+            //}
+
+            function onKeyDown(event){
+                console.log(event.which, event.code);
+                switch(event.code){
+                    case 'Space':
+                        if(moveInterval === null || isPlaying === false){
+                            start();
+                            
+
+                        }else{
+                            punch();
+                           
+                            //wywołanie uderzenia
+                        }
+                           
+                    break;
+                }
+            }
+
+            function start(){
+              moveInterval = setInterval(mainLoop,10);
+              isPlaying = true;
+            }
+
+            function stop(){
+              clearInterval(moveInterval);
+              moveInterval = null;
+            }
+            function punch(){
+                isPunch = true;
+                player.style.backgroundColor = 'red';
+                setTimeout(stopPunch,500);
+                console.log('punch');
+            }
+            function stopPunch(){
+                isPunch = false;
+                console.log('stoppunch');
+            }
+        </script>
+</body>
+</html>
