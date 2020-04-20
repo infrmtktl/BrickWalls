@@ -11,9 +11,9 @@
             box-sizing: border-box;
         }
         #player{
-            width:10px;
-            height:100px;
-            background:green;
+            width:60px;
+            height:80px;
+            background-image:url(chodzenie.GIF);
             position:relative;
             bottom:100px;
         }
@@ -64,7 +64,7 @@
             let isPlaying = false;
 
             function mainLoop(){
-                if(wall.offsetLeft > -150){
+                if(wall.offsetLeft > 0){
                     wall.style.left = wall.offsetLeft - step + 'px';
                 } else {
                     wall.style.left = 600 + 'px';
@@ -75,8 +75,12 @@
                 //if(){
                     //sprawdzenie czy nie ma uderzenia
             
-                if(player.offsetLeft >= wall.offsetLeft - 10){
-
+                if(
+                    player.offsetLeft >= wall.offsetLeft - 10 && 
+                    isPunch === false
+                    
+                    ){
+                    
                     stop()
                     console.log(player.offsetLeft , wall.offsetLeft)
                 }
@@ -115,13 +119,15 @@
             }
             function punch(){
                 isPunch = true;
-                player.style.backgroundColor = 'red';
-                setTimeout(stopPunch,500);
+                player.style.backgroundColor = 'url(punch.GIF)';
+                setTimeout(stopPunch,1000);
                 console.log('punch');
             }
             function stopPunch(){
+                
                 isPunch = false;
                 console.log('stoppunch');
+                player.style.backgroundImage = 'url(chodzenie.GIF)' ;
             }
         </script>
 </body>
