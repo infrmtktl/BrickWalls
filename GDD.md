@@ -17,6 +17,7 @@
 
 # ToDo:
 
+- Uporządkowanie zasobów (utworzenie folderów img,js,css i przeniesienie do nich właściwych plików);
 - Zliczanie punktów (oraz resetowanie dla nowej gry)
 - Podmiana grafiki bohater w zależności od stanu gry (iddle, run, punch, death);
 - Podmiana grafiki ściany
