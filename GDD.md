@@ -1,4 +1,4 @@
-GDD Ice Walls
+# GDD Ice Walls
 
 1.Fabuła:  rozbicie jak największej ilości ścian,
 
@@ -15,7 +15,7 @@ GDD Ice Walls
 7. Potrzene postacie przynajmniej z 3 klatki stojący biegający i uderzający, 
 
 
-ToDo:
+# ToDo:
 
 - Zliczanie punktów (oraz resetowanie dla nowej gry)
 - Podmiana grafiki bohater w zależności od stanu gry (iddle, run, punch, death);
