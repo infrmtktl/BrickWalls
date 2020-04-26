@@ -35,6 +35,16 @@
             width:600px;
             height:400px;
         }
+        #bottom{
+            margin:auto;
+            width:600px;
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #message{
+            text-align:center;
+        }
     </style>
 </head>
 <body>
@@ -45,26 +55,27 @@
             <div id="player"></div>
         </div>
     </div>
+    <div id="bottom"><h1 id="message">Press space to play</h1><h1 id="score">Score: 0</h1></div>
 
 
         <script>
-
-
-
+            //linking HTML elements
             const player = document.querySelector('#player');
             const wall = document.querySelector('#wall');
-
-            document.addEventListener('DOMContentLoaded',preloadAssets);
+            const messageText = document.querySelector('#message');
 
             document.addEventListener('keydown',onKeyDown);
-
             let step = 5;
-
             let moveInterval = null;
-
+            let punchTimeout = null;
             let isPunch = false;
-
             let isPlaying = false;
+            let score = 0;
+
+            document.addEventListener('DOMContentLoaded',()=>{
+                preloadImage('chodzenie.GIF');
+                preloadImage('punch.GIF');
+            });
 
             function mainLoop(){
                 if(wall.offsetLeft > 0){
@@ -75,32 +86,30 @@
                 if(player.offsetLeft < 250){
                     player.style.left = player.offsetLeft + step -2 + 'px';
                 }
-                //if(){
-                    //sprawdzenie czy nie ma uderzenia
+
+                //sprawdzenie czy nie ma uderzenia
             
-                if(
-                    player.offsetLeft >= wall.offsetLeft - 10 && 
-                    isPunch === false
-                    
-                    ){
-                    
-                    stop()
-                    console.log(player.offsetLeft , wall.offsetLeft)
+                if(isPunch === false){
+                    if(player.offsetLeft >= wall.offsetLeft - 10 && player.offsetLeft < wall.offsetLeft + 10){
+                        stop();
+                        console.log(player.offsetLeft , wall.offsetLeft)
+                    }                    
                 }
-             //}   else{
-                 //rozwalanie ściany
-                 //reset zmiennej punch
-             }
-            //}
+
+            }
 
             function onKeyDown(event){
                 console.log(event.which, event.code);
                 switch(event.code){
                     case 'Space':
-                        if(moveInterval === null || isPlaying === false){
+                        if(moveInterval === null && isPlaying === false){
+                            clearInterval(moveInterval);                            
                             start();
-                        }else{
+                            setMessage('Start');
+                        } else {
                             punch();
+                            setMessage('Punch');
+                            punchTimeout = setTimeout(stopPunch,500);
                             //wywołanie uderzenia
                         }
                            
@@ -109,29 +118,41 @@
             }
 
             function start(){
-              moveInterval = setInterval(mainLoop,10);
-              isPlaying = true;
+                wall.style.left = '700px';
+                player.style.left = '0px';
+                moveInterval = setInterval(mainLoop,10);
+                isPlaying = true;
             }
 
             function stop(){
               clearInterval(moveInterval);
+              clearTimeout(punchTimeout);
               moveInterval = null;
+              setMessage('GAME OVER');
             }
             function punch(){
                 isPunch = true;
                 player.style.backgroundColor = 'url(punch.GIF)';
-                setTimeout(stopPunch,1000);
+                player.style.border = '1px solid red';
                 console.log('punch');
             }
             function stopPunch(){
+                clearTimeout(punchTimeout);
                 isPunch = false;
+                isPlaying = false;
                 console.log('stoppunch');
                 player.style.backgroundImage = 'url(chodzenie.GIF)' ;
+                player.style.border = 'none';
+                setMessage('');
             }
 
-            function preloadAssets(url){
+            function preloadImage(url){
                 var img=new Image();
                 img.src=url;
+            }
+
+            function setMessage(message){
+                messageText.textContent = message;
             }
         </script>
 </body>
