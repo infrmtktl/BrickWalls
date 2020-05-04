@@ -11,12 +11,14 @@
             box-sizing: border-box;
         }
         #player{
-            width:60px;
-            height:80px;
-            background-image:url(chodzenie.GIF);
+            width:55px;
+            height:83px;
+            background-image:url('stojacy.PNG');
             position: absolute;
             bottom:100px;
+            background-repeat: no-repeat;
         }
+
         #wall{
             left:700px;
             bottom:100px;
@@ -115,7 +117,7 @@
                         } else {
                             punch();
                             setMessage('Punch');
-                            punchTimeout = setTimeout(stopPunch,500);
+                            punchTimeout = setTimeout(stopPunch,200);
                             //wywołanie uderzenia
                         }
                         
@@ -123,11 +125,12 @@
                     break;
                 }
             }
-
+            
             function start(){
                 wall.style.left = '700px';
                 player.style.left = '0px';
                 moveInterval = setInterval(mainLoop,10);
+                player.style.backgroundImage = 'url(chodzenie.GIF)' ;
                 isPlaying = true;
             }
 
