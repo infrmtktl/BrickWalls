@@ -14,15 +14,17 @@
             width:60px;
             height:80px;
             background-image:url(chodzenie.GIF);
-            position:relative;
+            position: absolute;
             bottom:100px;
         }
         #wall{
             left:700px;
-            width:50px;
-            height:300px;
-            background:red;
-            position:relative;            
+            bottom:100px;
+            width:100px;
+            height:100px;
+            background-image: url("sciana.PNG");
+            background-repeat: repeat-y;
+            position: absolute;            
         }
         #container{
             display:flex;
@@ -55,7 +57,7 @@
             <div id="player"></div>
         </div>
     </div>
-    <div id="bottom"><h1 id="message">Press space to play</h1><h1 id="score">Score: 0</h1></div>
+    <div id="bottom"><h1 id="message">Press space to play</h1><h1>Score:<span id="score">0</span> </h1></div>
 
 
         <script>
@@ -63,6 +65,7 @@
             const player = document.querySelector('#player');
             const wall = document.querySelector('#wall');
             const messageText = document.querySelector('#message');
+            const scoreEl = document.querySelector('#score');
 
             document.addEventListener('keydown',onKeyDown);
             let step = 5;
@@ -82,6 +85,7 @@
                     wall.style.left = wall.offsetLeft - step + 'px';
                 } else {
                     wall.style.left = 600 + 'px';
+                    wall.style.backgroundImage = 'url(sciana.PNG)';
                 }
                 if(player.offsetLeft < 250){
                     player.style.left = player.offsetLeft + step -2 + 'px';
@@ -93,10 +97,12 @@
                     if(player.offsetLeft >= wall.offsetLeft - 10 && player.offsetLeft < wall.offsetLeft + 10){
                         stop();
                         console.log(player.offsetLeft , wall.offsetLeft)
-                    }                    
+                    
+                    }               
                 }
 
             }
+        
 
             function onKeyDown(event){
                 console.log(event.which, event.code);
@@ -112,6 +118,7 @@
                             punchTimeout = setTimeout(stopPunch,500);
                             //wywołanie uderzenia
                         }
+                        
                            
                     break;
                 }
@@ -132,9 +139,9 @@
             }
             function punch(){
                 isPunch = true;
-                player.style.backgroundColor = 'url(punch.GIF)';
-                player.style.border = '1px solid red';
+                player.style.backgroundImage = 'url(punch.GIF)';
                 console.log('punch');
+                wall.style.backgroundImage = 'url(zepsute.PNG)';
             }
             function stopPunch(){
                 clearTimeout(punchTimeout);
@@ -147,7 +154,7 @@
             }
 
             function preloadImage(url){
-                var img=new Image();
+                var img=new Image();wall
                 img.src=url;
             }
 
