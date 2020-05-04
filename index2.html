@@ -73,6 +73,7 @@
             let step = 5;
             let moveInterval = null;
             let punchTimeout = null;
+            let wallTimeout = null;
             let isPunch = false;
             let isPlaying = false;
             let score = 0;
@@ -98,14 +99,14 @@
                 if(isPunch === false){
                     if(player.offsetLeft >= wall.offsetLeft - 10 && player.offsetLeft < wall.offsetLeft + 10){
                         stop();
-                        console.log(player.offsetLeft , wall.offsetLeft)
-                    
-                    }               
+                        // console.log(player.offsetLeft , wall.offsetLeft)
+                    } else {
+                        console.log('OK'); 
+                    }
                 }
 
             }
         
-
             function onKeyDown(event){
                 console.log(event.which, event.code);
                 switch(event.code){
@@ -117,11 +118,13 @@
                         } else {
                             punch();
                             setMessage('Punch');
+<<<<<<< HEAD
                             punchTimeout = setTimeout(stopPunch,200);
+=======
+                            punchTimeout = setTimeout(stopPunch,400);
+>>>>>>> 0188e43d00bda2e0d6b212f057135682e746aa57
                             //wywołanie uderzenia
-                        }
-                        
-                           
+                        }                          
                     break;
                 }
             }
@@ -133,7 +136,6 @@
                 player.style.backgroundImage = 'url(chodzenie.GIF)' ;
                 isPlaying = true;
             }
-
             function stop(){
               clearInterval(moveInterval);
               clearTimeout(punchTimeout);
@@ -143,8 +145,8 @@
             function punch(){
                 isPunch = true;
                 player.style.backgroundImage = 'url(punch.GIF)';
-                console.log('punch');
-                wall.style.backgroundImage = 'url(zepsute.PNG)';
+                clearTimeout(wallTimeout);
+                wallTimeout = setTimeout(checkWall,200);
             }
             function stopPunch(){
                 clearTimeout(punchTimeout);
@@ -153,7 +155,7 @@
                 console.log('stoppunch');
                 player.style.backgroundImage = 'url(chodzenie.GIF)' ;
                 player.style.border = 'none';
-                setMessage('');
+                setMessage('OK');
             }
 
             function preloadImage(url){
@@ -163,6 +165,12 @@
 
             function setMessage(message){
                 messageText.textContent = message;
+            }
+
+            function checkWall(){
+                if(player.offsetLeft >= wall.offsetLeft - 50 && player.offsetLeft < wall.offsetLeft + 10){
+                    wall.style.backgroundImage = 'url(zepsute.PNG)'; 
+                }
             }
         </script>
 </body>
