@@ -1,4 +1,4 @@
-GDD Ice Walls
+# GDD Ice Walls
 
 1.Fabuła:  rozbicie jak największej ilości ścian,
 
@@ -15,3 +15,12 @@ GDD Ice Walls
 7. Potrzene postacie przynajmniej z 3 klatki stojący biegający i uderzający, 
 
 
+# ToDo:
+
+- Uporządkowanie zasobów (utworzenie folderów img,js,css i przeniesienie do nich właściwych plików);
+- Zliczanie punktów (oraz resetowanie dla nowej gry)
+- Podmiana grafiki bohater w zależności od stanu gry (iddle, run, punch, death);
+- Podmiana grafiki ściany
+- Losowe opóźnienie dla ściany (jest jedna ściana ale może wchodzić po odstępie)
+- High score (wyświetlenie na początku i na końcu rozgrywki).
+- Wysyłanie wyniku na serwer (AJAX). 
