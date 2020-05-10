@@ -73,6 +73,7 @@
             let punchTimeout = null;
             let wallTimeout = null;
             let isPunch = false;
+            let punchMagin = 200;
             let isPlaying = false;
             let score = 0;
 
@@ -88,14 +89,14 @@
                     wall.style.left = 600 + 'px';
                     wall.style.backgroundImage = 'url(sciana.PNG)';
                 }
-                if(player.offsetLeft < 250){
+                if(player.offsetLeft < punchMagin){
                     player.style.left = player.offsetLeft + step -2 + 'px';
                 }
 
                 //sprawdzenie czy nie ma uderzenia
             
                 if(isPunch === false){
-                    if(player.offsetLeft >= wall.offsetLeft - 10 && player.offsetLeft < wall.offsetLeft + 10){
+                    if(player.offsetLeft >= wall.offsetLeft - 20 && player.offsetLeft < wall.offsetLeft + 10){
                         stop();
                         // console.log(player.offsetLeft , wall.offsetLeft)
                     } else {
@@ -106,26 +107,29 @@
             }
         
             function onKeyDown(event){
-                console.log(event.which, event.code);
+                // console.log(event.which, event.code);
                 switch(event.code){
                     case 'Space':
-                        if(moveInterval === null && isPlaying === false){
+                        if(moveInterval === null && isPlaying === false && isPunch === false){
                             clearInterval(moveInterval);                            
                             start();
                             setMessage('Start');
                         } else {
-                            punch();
-                            setMessage('Punch');
-                            punchTimeout = setTimeout(stopPunch,400);
-                            //wywołanie uderzenia
+                            if(isPunch === false){                            
+                                punch();
+                                setMessage('Punch');
+                                clearTimeout(punchTimeout);
+                                punchTimeout = setTimeout(stopPunch,400);
+                                //wywołanie uderzenia
+                            }
                         }                          
                     break;
                 }
             }
-
             function start(){
                 wall.style.left = '700px';
                 player.style.left = '0px';
+
                 moveInterval = setInterval(mainLoop,10);
                 isPlaying = true;
             }
@@ -138,17 +142,15 @@
             function punch(){
                 isPunch = true;
                 player.style.backgroundImage = 'url(punch.GIF)';
-                clearTimeout(wallTimeout);
-                wallTimeout = setTimeout(checkWall,200);
+                checkWall();
             }
             function stopPunch(){
                 clearTimeout(punchTimeout);
                 isPunch = false;
-                isPlaying = false;
-                console.log('stoppunch');
+                // console.log('stoppunch');
                 player.style.backgroundImage = 'url(chodzenie.GIF)' ;
                 player.style.border = 'none';
-                setMessage('OK');
+                setMessage('stopPunch');
             }
 
             function preloadImage(url){
@@ -161,8 +163,16 @@
             }
 
             function checkWall(){
-                if(player.offsetLeft >= wall.offsetLeft - 50 && player.offsetLeft < wall.offsetLeft + 10){
-                    wall.style.backgroundImage = 'url(zepsute.PNG)'; 
+                // console.log(player.offsetLeft,wall.offsetLeft);
+                if(player.offsetLeft > wall.offsetLeft - punchMagin && player.offsetLeft < wall.offsetLeft - 100){
+                    clearTimeout(wallTimeout);
+                    wallTimeout = setTimeout(()=>{
+                        isPunch = true;
+                        wall.style.backgroundImage = 'url(zepsute.PNG)'; 
+                    },200)
+                } else {
+                    clearTimeout(wallTimeout);
+                    isPlaying = false;
                 }
             }
         </script>
