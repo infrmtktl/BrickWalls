@@ -11,11 +11,13 @@
             box-sizing: border-box;
         }
         #player{
-            width:60px;
+            width:100px;
             height:80px;
-            background-image:url(chodzenie.GIF);
+            background-image:url(stojacy.png);
             position: absolute;
             bottom:100px;
+            background-repeat: no-repeat;
+            border:1px solid red;
         }
         #wall{
             left:700px;
@@ -73,7 +75,7 @@
             let punchTimeout = null;
             let wallTimeout = null;
             let isPunch = false;
-            let punchMagin = 200;
+            let punchMargin = 200;
             let isPlaying = false;
             let score = 0;
 
@@ -89,14 +91,14 @@
                     wall.style.left = 600 + 'px';
                     wall.style.backgroundImage = 'url(sciana.PNG)';
                 }
-                if(player.offsetLeft < punchMagin){
+                if(player.offsetLeft < punchMargin){
                     player.style.left = player.offsetLeft + step -2 + 'px';
                 }
 
                 //sprawdzenie czy nie ma uderzenia
             
                 if(isPunch === false){
-                    if(player.offsetLeft >= wall.offsetLeft - 20 && player.offsetLeft < wall.offsetLeft + 10){
+                    if(player.offsetLeft >= wall.offsetLeft - 70 && player.offsetLeft < wall.offsetLeft + 20){
                         stop();
                         // console.log(player.offsetLeft , wall.offsetLeft)
                     } else {
@@ -129,15 +131,17 @@
             function start(){
                 wall.style.left = '700px';
                 player.style.left = '0px';
-
+               
                 moveInterval = setInterval(mainLoop,10);
-                isPlaying = true;
+                isPlaying = true; 
+                player.style.backgroundImage = 'url(chodzenie.GIF)';
             }
             function stop(){
               clearInterval(moveInterval);
               clearTimeout(punchTimeout);
               moveInterval = null;
               setMessage('GAME OVER');
+              player.style.backgroundImage = 'url(umarl.png)';
             }
             function punch(){
                 isPunch = true;
@@ -164,12 +168,18 @@
 
             function checkWall(){
                 // console.log(player.offsetLeft,wall.offsetLeft);
-                if(player.offsetLeft > wall.offsetLeft - punchMagin && player.offsetLeft < wall.offsetLeft - 100){
+                if(player.offsetLeft > wall.offsetLeft - punchMargin && player.offsetLeft < wall.offsetLeft - 100){
                     clearTimeout(wallTimeout);
                     wallTimeout = setTimeout(()=>{
                         isPunch = true;
                         wall.style.backgroundImage = 'url(zepsute.PNG)'; 
-                    },200)
+                    var score = document.getElementById('score').innerHTML;
+                    score++;
+                    document.getElementById('score').innerHTML = score;
+                    
+                },200);
+                    
+                    
                 } else {
                     clearTimeout(wallTimeout);
                     isPlaying = false;
